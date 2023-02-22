@@ -1,0 +1,28 @@
+[package]
+name = "mng_to_png"
+version = "0.0.0"
+edition = "2021"
+authors = ["John Lyon-Smith <john@lyon-smith.org>"]
+description = "Extracts PNG files from an MNG file"
+repository = "https://github.com/jlyonsmith/mng_to_png"
+readme = "README.md"
+keywords = []
+categories = []
+license = "Unlicense"
+
+[dependencies]
+clap = { version = "4.0.7", features = ["derive"] }
+colored = "^2.0.0"
+easy-error = "1.0.0"
+lazy_static = "1.4.0"
+
+[dev-dependencies]
+criterion = "^0.3"
+
+[[bench]]
+name = "benchmarks"
+harness = false
+
+[[bin]]
+name = "rust-cli-quickstart"
+path = "src/bin/mng_to_png.rs"
