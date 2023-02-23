@@ -366,6 +366,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "mng_to_png"
+version = "0.0.0"
+dependencies = [
+ "clap 4.1.6",
+ "colored",
+ "criterion",
+ "easy-error",
+ "lazy_static",
+]
+
+[[package]]
 name = "num-traits"
 version = "0.2.15"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -508,17 +519,6 @@ name = "regex-syntax"
 version = "0.6.28"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "456c603be3e8d448b072f410900c09faf164fbce2d480456f50eea6e25f9c848"
-
-[[package]]
-name = "rust_cli_quickstart"
-version = "0.0.0"
-dependencies = [
- "clap 4.1.6",
- "colored",
- "criterion",
- "easy-error",
- "lazy_static",
-]
 
 [[package]]
 name = "rustix"

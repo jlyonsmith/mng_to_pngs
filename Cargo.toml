@@ -9,6 +9,7 @@ readme = "README.md"
 keywords = []
 categories = []
 license = "Unlicense"
+links = "libmng"
 
 [dependencies]
 clap = { version = "4.0.7", features = ["derive"] }

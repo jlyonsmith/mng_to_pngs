@@ -1,14 +1,10 @@
 mod log_macros;
+mod mng;
 
 use clap::Parser;
 use core::fmt::Arguments;
-use easy_error::{self, ResultExt};
-use std::{
-    error::Error,
-    fs::File,
-    io::{self, Read, Write},
-    path::PathBuf,
-};
+use mng::{MngError, MngFile};
+use std::{error::Error, path::PathBuf};
 
 pub trait MngToPngLog {
     fn output(self: &Self, args: Arguments);
@@ -23,38 +19,17 @@ pub struct MngToPngTool<'a> {
 #[derive(Parser)]
 #[clap(version, about, long_about = None)]
 struct Cli {
-    /// The JSON5 input file
-    #[arg(value_name = "INPUT_FILE")]
-    input_file: Option<PathBuf>,
+    /// The MNG file
+    #[arg(value_name = "MNG_FILE")]
+    input_file: PathBuf,
 
-    /// The SVG output file
-    #[arg(value_name = "OUTPUT_FILE")]
-    output_file: Option<PathBuf>,
-}
+    /// The output directory
+    #[arg(value_name = "OUTPUT_DIRECTORY")]
+    output_file: PathBuf,
 
-impl Cli {
-    fn get_output(&self) -> Result<Box<dyn Write>, Box<dyn Error>> {
-        match self.output_file {
-            Some(ref path) => File::create(path)
-                .context(format!(
-                    "Unable to create file '{}'",
-                    path.to_string_lossy()
-                ))
-                .map(|f| Box::new(f) as Box<dyn Write>)
-                .map_err(|e| Box::new(e) as Box<dyn Error>),
-            None => Ok(Box::new(io::stdout())),
-        }
-    }
-
-    fn get_input(&self) -> Result<Box<dyn Read>, Box<dyn Error>> {
-        match self.input_file {
-            Some(ref path) => File::open(path)
-                .context(format!("Unable to open file '{}'", path.to_string_lossy()))
-                .map(|f| Box::new(f) as Box<dyn Read>)
-                .map_err(|e| Box::new(e) as Box<dyn Error>),
-            None => Ok(Box::new(io::stdin())),
-        }
-    }
+    /// Optional output file prefix
+    #[arg(value_name = "PREFIX")]
+    prefix: Option<String>,
 }
 
 impl<'a> MngToPngTool<'a> {
@@ -74,11 +49,7 @@ impl<'a> MngToPngTool<'a> {
             }
         };
 
-        let mut content = String::new();
-
-        cli.get_input()?.read_to_string(&mut content)?;
-
-        write!(cli.get_output()?, "{}", content)?;
+        let mng_file = MngFile::open();
 
         Ok(())
     }
