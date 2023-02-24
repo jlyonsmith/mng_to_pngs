@@ -1,6 +1,6 @@
 use core::fmt::Arguments;
 use criterion::{black_box, criterion_group, criterion_main, Criterion};
-use mng_to_png::*;
+use mng_to_pngs::*;
 
 fn benchmark_1(arg: &str) {
     struct TestLogger;

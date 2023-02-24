@@ -366,7 +366,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "mng_to_png"
+name = "mng_to_pngs"
 version = "0.0.0"
 dependencies = [
  "clap 4.1.6",

@@ -20,7 +20,7 @@ impl MngFile {
     extern "C" fn mem_alloc(len: usize) -> *mut c_void {
         let layout = match Layout::from_size_align(len, ALIGNMENT) {
             Ok(r) => r,
-            Err(e) => return ptr::null_mut(),
+            Err(_) => return ptr::null_mut(),
         };
 
         unsafe {
@@ -29,19 +29,21 @@ impl MngFile {
             if p.is_null() {
                 ptr::null_mut()
             } else {
+                // We have to zero the memory as libmng does not properly initialize its structures
+                p.write_bytes(0, len);
                 p as *mut c_void
             }
         }
     }
 
-    extern "C" fn mem_dealloc(ptr: *mut c_void, len: usize) {
+    extern "C" fn mem_dealloc(p: *mut c_void, len: usize) {
         let layout = match Layout::from_size_align(len, ALIGNMENT) {
             Ok(r) => r,
-            Err(e) => return,
+            Err(_) => return,
         };
 
         unsafe {
-            dealloc(ptr as *mut u8, layout);
+            dealloc(p as *mut u8, layout);
         }
     }
 
@@ -60,8 +62,9 @@ impl MngFile {
 
     fn cleanup(&mut self) {
         unsafe {
-            if let Some(h) = self.handle {
+            if let Some(ref mut h) = self.handle {
                 raw::mng_cleanup(h);
+                self.handle = None;
             }
         }
     }

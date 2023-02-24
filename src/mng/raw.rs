@@ -31,7 +31,7 @@ extern "C" {
         mem_free_cb: MngMemFree,
         trace_cb: *const c_void,
     ) -> MngHandle;
-    pub fn mng_cleanup(handle: MngHandle) -> MngRetCode;
+    pub fn mng_cleanup(handle: *mut MngHandle) -> MngRetCode;
     pub fn mng_setcb_openstream(handle: MngHandle, cb: MngOpenStream) -> MngRetCode;
     pub fn mng_setcb_closestream(handle: MngHandle, cb: MngCloseStream) -> MngRetCode;
     pub fn mng_setcb_readdata(handle: MngHandle, cb: MngReadData) -> MngRetCode;

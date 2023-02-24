@@ -1,6 +1,6 @@
 use colored::Colorize;
 use core::fmt::Arguments;
-use mng_to_png::{error, MngToPngLog, MngToPngTool};
+use mng_to_pngs::{error, MngToPngLog, MngToPngTool};
 
 struct MngToPngLogger;
 

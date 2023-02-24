@@ -1,10 +1,10 @@
 [package]
-name = "mng_to_png"
+name = "mng_to_pngs"
 version = "0.0.0"
 edition = "2021"
 authors = ["John Lyon-Smith <john@lyon-smith.org>"]
 description = "Extracts PNG files from an MNG file"
-repository = "https://github.com/jlyonsmith/mng_to_png"
+repository = "https://github.com/jlyonsmith/mng_to_pngs"
 readme = "README.md"
 keywords = []
 categories = []
@@ -25,5 +25,5 @@ name = "benchmarks"
 harness = false
 
 [[bin]]
-name = "rust-cli-quickstart"
-path = "src/bin/mng_to_png.rs"
+name = "mng-to-pngs"
+path = "src/bin/mng_to_pngs.rs"
