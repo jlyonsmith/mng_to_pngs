@@ -31,10 +31,6 @@ struct Cli {
     /// The output directory
     #[arg(value_name = "OUTPUT_DIRECTORY")]
     output_dir: PathBuf,
-
-    /// Optional output file prefix
-    #[arg(value_name = "PREFIX")]
-    prefix: Option<String>,
 }
 
 impl<'a> MngToPngTool<'a> {
