@@ -18,7 +18,7 @@ pub type MngReadData = extern "C" fn(
 pub type MngIterateChunks = extern "C" fn(
     handle: MngHandle,
     chunk: MngHandle,
-    chunk_type: c_int,
+    chunk_type: c_uint,
     chunk_sequence: c_uint,
 ) -> MngBool;
 
@@ -35,6 +35,7 @@ extern "C" {
     pub fn mng_setcb_openstream(handle: MngHandle, cb: MngOpenStream) -> MngRetCode;
     pub fn mng_setcb_closestream(handle: MngHandle, cb: MngCloseStream) -> MngRetCode;
     pub fn mng_setcb_readdata(handle: MngHandle, cb: MngReadData) -> MngRetCode;
+    pub fn mng_get_userdata(handle: MngHandle) -> *mut c_void;
     pub fn mng_read(handle: MngHandle) -> MngRetCode;
     pub fn mng_iterate_chunks(
         handle: MngHandle,
@@ -47,7 +48,7 @@ extern "C" {
         width: *mut c_uint,
         height: *mut c_uint,
         bit_depth: *mut c_uchar,
-        color_type: *mut c_uchar,
+        color_depth: *mut c_uchar,
         compression: *mut c_uchar,
         filter: *mut c_uchar,
         interlace: *mut c_uchar,
@@ -56,10 +57,10 @@ extern "C" {
         handle: MngHandle,
         chunk: MngHandle,
         raw_len: *mut c_uint,
-        raw_data: *mut c_uchar,
+        raw_data: *mut *mut c_uchar,
     ) -> MngRetCode;
 }
 
-const MNG_UINT_IHDR: c_int = 0x49484452;
-const MNG_UINT_IDAT: c_int = 0x49444154;
-const MNG_UINT_IEND: c_int = 0x49454e44;
+pub const MNG_UINT_IHDR: c_uint = 0x49484452;
+pub const MNG_UINT_IDAT: c_uint = 0x49444154;
+pub const MNG_UINT_IEND: c_uint = 0x49454e44;
